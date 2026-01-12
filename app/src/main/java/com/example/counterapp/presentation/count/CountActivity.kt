@@ -3,6 +3,7 @@ package com.example.counterapp.presentation.count
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.counterapp.databinding.ActivityCountBinding
+import com.example.counterapp.domain.model.TypeOfOperations
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CountActivity : AppCompatActivity() {
@@ -30,6 +31,19 @@ class CountActivity : AppCompatActivity() {
 
         viewModel.countData.observe(this) { count ->
             binding.tvCounter.text = count.count.toString()
+
+            binding.tvOperation.text = when(count.typeOfOperation){
+                TypeOfOperations.INCREMENT ->  "Last operation: +"
+                TypeOfOperations.DECREMENT ->  "Last operation: -"
+                TypeOfOperations.RESET ->  "Last operation: reset"
+                TypeOfOperations.NONE -> " "
+            }
+            binding.tvIncrementCount.text =
+                "+ : ${count.countOfIncrement}"
+
+            binding.tvDecrementCount.text =
+                "- : ${count.countOfDecrement}"
+
         }
     }
 }
